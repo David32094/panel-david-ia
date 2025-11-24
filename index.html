@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DAVID IA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">DAVID IA</h1>
+            <div class="user-info" id="user-info" style="display: none;">
+                <span class="user-name" id="user-name"></span>
+                <span class="user-plan" id="user-plan"></span>
+                <button class="logout-btn" id="logout-btn" title="Cerrar Sesión">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="input-container">
+                <label for="uid-input" class="input-label">UID del Jugador</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="uid-input" 
+                        class="uid-input" 
+                        placeholder="Ingresa el UID del jugador"
+                        required
+                    >
+                    <button id="validate-btn" class="validate-btn">Validar</button>
+                </div>
+                <span id="uid-status" class="uid-status"></span>
+            </div>
+            
+            <div class="input-container" style="margin-top: 20px;">
+                <label for="team-code-input" class="input-label">Código de Equipo</label>
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="team-code-input" 
+                        class="uid-input" 
+                        placeholder="Ingresa el código de equipo (ej: 123456)"
+                        required
+                    >
+                    <button id="validate-team-btn" class="validate-btn">Validar</button>
+                </div>
+                <span id="team-status" class="uid-status"></span>
+            </div>
+            
+            <div class="input-container" style="margin-top: 20px;">
+                <label class="input-label">Modo de Operación</label>
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input 
+                            type="radio" 
+                            name="bot-mode" 
+                            id="bot-mode-leave" 
+                            value="leave" 
+                            checked
+                            style="width: 18px; height: 18px; cursor: pointer;"
+                        >
+                        <span style="color: #8DAFA3; font-size: 0.95rem;">🚪 Salir Bot</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input 
+                            type="radio" 
+                            name="bot-mode" 
+                            id="bot-mode-stay" 
+                            value="stay"
+                            style="width: 18px; height: 18px; cursor: pointer;"
+                        >
+                        <span style="color: #8DAFA3; font-size: 0.95rem;">🏠 Quedarse Bot</span>
+                    </label>
+                </div>
+                <div style="margin-top: 8px; padding: 10px; background: rgba(30, 245, 154, 0.1); border-radius: 8px; border: 1px solid rgba(30, 245, 154, 0.3);">
+                    <span id="bot-mode-description" style="color: #1EF59A; font-size: 0.85rem;">
+                        🚪 <strong>Salir Bot:</strong> Sale del equipo después de ejecutar el emote
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Status Log -->
+        <section class="log-section">
+            <div class="log-container">
+                <h3 class="log-title">Estado del Sistema</h3>
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <a href="test-connection.html" style="color: #1EF59A; text-decoration: none; font-size: 0.9rem;">🧪 Test de Conexión</a>
+                </div>
+                <div id="log-content" class="log-content">
+                    <p class="log-message info">Esperando acción...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <!-- Evolutivas -->
+            <div class="category-panel" id="evolutivas">
+                <h2 class="category-title">
+                    <span class="category-icon">⚡</span>
+                    Evolutivas
+                </h2>
+                <div class="emote-grid" id="evolutivas-grid">
+                    <!-- Emotes se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Normales -->
+            <div class="category-panel" id="normales">
+                <h2 class="category-title">
+                    <span class="category-icon">🎮</span>
+                    Normales
+                </h2>
+                <div class="emote-grid" id="normales-grid">
+                    <!-- Emotes se cargarán dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Dúo -->
+            <div class="category-panel" id="duo">
+                <h2 class="category-title">
+                    <span class="category-icon">👥</span>
+                    Dúo
+                </h2>
+                <div class="emote-grid" id="duo-grid">
+                    <!-- Emotes se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="weapon-names.js"></script>
+    <script src="emotes-data.js"></script>
+    <script src="cursor-trail.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+

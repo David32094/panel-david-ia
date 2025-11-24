@@ -1,0 +1,802 @@
+/* ============================================
+   SISTEMA DE ANIMACIONES PREMIUM - DAVID IA
+   ============================================ */
+
+/* ============================================
+   1. FONDO ANIMADO (BACKGROUND)
+   ============================================ */
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes breathe {
+    0%, 100% {
+        opacity: 0.95;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100vh) translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes wavePulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+    50% {
+        transform: scale(1.5);
+        opacity: 0.3;
+    }
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #0FAF68 0%, #042B1F 40%, #07100D 100%);
+    background-size: 200% 200%;
+    animation: gradientFlow 10s ease-in-out infinite, breathe 8s ease-in-out infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(30, 245, 154, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(15, 175, 104, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(30, 245, 154, 0.08) 0%, transparent 50%);
+    animation: wavePulse 12s ease-in-out infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Partículas flotantes */
+.particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: rgba(30, 245, 154, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: particleFloat 15s linear infinite;
+}
+
+/* ============================================
+   2. INPUT DE UID - ANIMACIONES
+   ============================================ */
+
+@keyframes scanning {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(30, 245, 154, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(30, 245, 154, 0.6);
+    }
+}
+
+@keyframes underline {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 50;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        border-color: var(--green-secondary);
+    }
+    50% {
+        border-color: var(--green-primary);
+        box-shadow: 0 0 15px rgba(30, 245, 154, 0.5);
+    }
+}
+
+.uid-input {
+    position: relative;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg, var(--green-dark) 0%, var(--green-dark) 50%, var(--green-dark) 100%);
+    background-size: 200% 100%;
+    animation: scanning 3s linear infinite;
+}
+
+.uid-input:focus {
+    animation: pulse 1s ease-in-out infinite;
+    transform: scale(1.02);
+}
+
+.uid-input:focus::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green-primary), transparent);
+    animation: underline 0.5s ease-out forwards;
+}
+
+.uid-status.invalid ~ .input-wrapper .uid-input {
+    animation: shake 0.5s ease-in-out;
+}
+
+.uid-status.valid ~ .input-wrapper .uid-input {
+    animation: successPulse 0.6s ease-in-out;
+}
+
+/* ============================================
+   3. BOTONES DE EMOTES - ANIMACIONES
+   ============================================ */
+
+@keyframes breatheCard {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+@keyframes liftUp {
+    0% {
+        transform: translateY(0) scale(1);
+        box-shadow: 0 4px 12px rgba(30, 245, 154, 0.2);
+    }
+    100% {
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 12px 24px rgba(30, 245, 154, 0.4);
+    }
+}
+
+@keyframes glowExpand {
+    0% {
+        box-shadow: 0 0 10px rgba(30, 245, 154, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(30, 245, 154, 0.8);
+    }
+}
+
+@keyframes borderShine {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+@keyframes imageZoom {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.15);
+    }
+}
+
+@keyframes clickImplode {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes particleBurst {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(2) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes energyPulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+@keyframes sendingSpinner {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes checkmarkBounce {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+.emote-card {
+    animation: breatheCard 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+.emote-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(30, 245, 154, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.emote-card:hover::before {
+    left: 100%;
+}
+
+.emote-card:hover {
+    animation: liftUp 0.3s ease-out forwards, glowExpand 0.3s ease-out forwards;
+}
+
+.emote-card:hover .emote-image {
+    animation: imageZoom 0.3s ease-out forwards;
+}
+
+.emote-card:active {
+    animation: clickImplode 0.1s ease-out;
+}
+
+.emote-card.sending {
+    position: relative;
+}
+
+.emote-card.sending::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid var(--green-primary);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: sendingSpinner 1s linear infinite;
+}
+
+.emote-card.success::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--green-primary);
+    font-size: 24px;
+    font-weight: bold;
+    animation: checkmarkBounce 0.5s ease-out;
+}
+
+/* ============================================
+   4. SECCIONES/CATEGORÍAS - ANIMACIONES
+   ============================================ */
+
+@keyframes glitch {
+    0%, 100% {
+        text-shadow: 0 0 5px var(--green-primary);
+    }
+    25% {
+        text-shadow: -2px 0 5px var(--green-primary), 2px 0 5px rgba(255, 0, 0, 0.5);
+    }
+    50% {
+        text-shadow: 2px 0 5px var(--green-primary), -2px 0 5px rgba(0, 255, 0, 0.5);
+    }
+    75% {
+        text-shadow: 0 0 5px var(--green-primary);
+    }
+}
+
+@keyframes titleUnderline {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px rgba(30, 245, 154, 0.5);
+    }
+    50% {
+        text-shadow: 0 0 20px rgba(30, 245, 154, 0.8);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes borderScan {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+}
+
+@keyframes cornerBlink {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.category-title {
+    animation: titleGlow 3s ease-in-out infinite;
+}
+
+.category-title::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--green-primary), transparent);
+    margin-top: 5px;
+    animation: titleUnderline 1s ease-out 0.5s forwards;
+}
+
+.category-panel {
+    animation: fadeInUp 0.6s ease-out;
+    position: relative;
+}
+
+.category-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-image: linear-gradient(90deg, var(--green-secondary), var(--green-primary), var(--green-secondary)) 1;
+    border-image-slice: 1;
+    background: linear-gradient(90deg, transparent, rgba(30, 245, 154, 0.05), transparent);
+    background-size: 200% 200%;
+    animation: borderScan 3s linear infinite;
+    pointer-events: none;
+    border-radius: var(--border-radius);
+}
+
+.category-panel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--green-primary);
+    border-left: 2px solid var(--green-primary);
+    animation: cornerBlink 2s ease-in-out infinite;
+}
+
+/* ============================================
+   5. LOG/FEEDBACK PANEL - ANIMACIONES
+   ============================================ */
+
+@keyframes slideInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(100px) scale(0.8);
+    }
+}
+
+@keyframes checkmarkDraw {
+    0% {
+        stroke-dashoffset: 50;
+    }
+    100% {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+@keyframes errorPulse {
+    0%, 100% {
+        border-left-color: #ff4444;
+    }
+    50% {
+        border-left-color: #ff0000;
+        box-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+    }
+}
+
+@keyframes dots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+
+.log-message {
+    animation: slideInRight 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.log-message.success {
+    position: relative;
+}
+
+.log-message.success::before {
+    content: '✓';
+    position: absolute;
+    left: 10px;
+    color: var(--green-primary);
+    font-weight: bold;
+    animation: checkmarkBounce 0.5s ease-out;
+}
+
+.log-message.error {
+    animation: errorShake 0.5s ease-in-out, errorPulse 1s ease-in-out 2;
+}
+
+.log-message.sending::after {
+    content: '...';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+/* ============================================
+   6. TRANSICIONES GENERALES
+   ============================================ */
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes matrixFall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header {
+    animation: fadeIn 1s ease-out, slideUp 1s ease-out;
+}
+
+.title {
+    animation: titleMatrixFall 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    animation-delay: 0.3s;
+    animation-fill-mode: both;
+}
+
+@keyframes titleMatrixFall {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.8);
+        filter: blur(10px);
+    }
+    60% {
+        transform: translateY(10px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+    }
+}
+
+.emote-grid {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.emote-card {
+    animation: fadeInUp 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+/* Stagger animation para cards */
+.emote-card:nth-child(1) { animation-delay: 0.1s; }
+.emote-card:nth-child(2) { animation-delay: 0.15s; }
+.emote-card:nth-child(3) { animation-delay: 0.2s; }
+.emote-card:nth-child(4) { animation-delay: 0.25s; }
+.emote-card:nth-child(5) { animation-delay: 0.3s; }
+.emote-card:nth-child(6) { animation-delay: 0.35s; }
+.emote-card:nth-child(7) { animation-delay: 0.4s; }
+.emote-card:nth-child(8) { animation-delay: 0.45s; }
+.emote-card:nth-child(n+9) { animation-delay: 0.5s; }
+
+/* ============================================
+   7. MICROANIMACIONES ESPPECIALES
+   ============================================ */
+
+@keyframes cursorTrail {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+
+@keyframes lightReflection {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Cursor trail effect - solo activar si se carga cursor-trail.js */
+body.has-cursor-trail {
+    cursor: none;
+}
+
+.cursor-trail {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--green-primary);
+    pointer-events: none;
+    z-index: 9999;
+    animation: cursorTrail 0.5s ease-out forwards;
+    opacity: 0.6;
+}
+
+/* Loading global */
+@keyframes orbit {
+    0% {
+        transform: rotate(0deg) translateX(30px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(30px) rotate(-360deg);
+    }
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    position: relative;
+}
+
+.loading-spinner::before,
+.loading-spinner::after {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--green-primary);
+    border-radius: 50%;
+    animation: orbit 2s linear infinite;
+}
+
+.loading-spinner::after {
+    animation-delay: -1s;
+}
+
+/* ============================================
+   8. EFECTOS ESPECIALES PREMIUM
+   ============================================ */
+
+@keyframes holographic {
+    0%, 100% {
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        filter: hue-rotate(10deg);
+    }
+}
+
+@keyframes scanLines {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 0 100%;
+    }
+}
+
+@keyframes neonBlink {
+    0%, 100% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.8;
+        filter: brightness(1.2);
+    }
+}
+
+@keyframes metallicReflection {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.category-panel,
+.emote-card {
+    position: relative;
+}
+
+.category-panel::before {
+    background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(30, 245, 154, 0.03) 2px,
+        rgba(30, 245, 154, 0.03) 4px
+    );
+    background-size: 100% 4px;
+    animation: scanLines 8s linear infinite;
+}
+
+.emote-card:hover {
+    background: linear-gradient(135deg, transparent 0%, rgba(30, 245, 154, 0.1) 50%, transparent 100%);
+    background-size: 200% 200%;
+    animation: metallicReflection 0.6s ease-in-out;
+}
+
+/* ============================================
+   RESPETAR PREFERS-REDUCED-MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+.emote-card,
+.category-panel,
+.log-message {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+

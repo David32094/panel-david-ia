@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es" class="auth-html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>David IA - Iniciar Sesión</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="auth-page">
+    <!-- Partículas de fondo animadas -->
+    <div class="auth-background">
+        <div class="particles-container"></div>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="auth-container">
+        <!-- Logo animado -->
+        <div class="auth-logo">
+            <h1 class="logo-text glitch-text" data-text="DAVID IA">DAVID IA</h1>
+            <div class="logo-subtitle">Panel de Control v3.0</div>
+        </div>
+
+        <!-- Card de autenticación -->
+        <div class="auth-card">
+            <!-- Tabs Login/Register -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Iniciar Sesión</span>
+                </button>
+                <button class="auth-tab" data-tab="register">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Registrarse</span>
+                </button>
+                <div class="tab-indicator"></div>
+            </div>
+
+            <!-- Contenido de Login -->
+            <div class="auth-content" id="login-content">
+                <form id="login-form" class="auth-form">
+                    <!-- Username -->
+                    <div class="input-group">
+                        <label for="login-username">
+                            <i class="fas fa-user"></i>
+                            Usuario
+                        </label>
+                        <input 
+                            type="text" 
+                            id="login-username" 
+                            name="username"
+                            placeholder="Ingresa tu usuario"
+                            required
+                            autocomplete="username"
+                        >
+                        <span class="input-error" id="login-username-error"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="input-group">
+                        <label for="login-password">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input 
+                                type="password" 
+                                id="login-password" 
+                                name="password"
+                                placeholder="Ingresa tu contraseña"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="password-toggle" id="login-password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="input-error" id="login-password-error"></span>
+                    </div>
+
+                    <!-- Recordarme y Olvidé contraseña -->
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="remember-me" name="remember">
+                            <span class="checkmark"></span>
+                            Recordarme
+                        </label>
+                        <a href="#" class="forgot-password-link" id="forgot-password-btn">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <!-- Botón de Login -->
+                    <button type="submit" class="auth-btn primary" id="login-btn">
+                        <span class="btn-text">Iniciar Sesión</span>
+                        <span class="btn-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+
+                    <!-- Link a Registro -->
+                    <div class="auth-switch">
+                        ¿No tienes cuenta? 
+                        <a href="#" class="switch-link" data-switch="register">Regístrate</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contenido de Registro -->
+            <div class="auth-content hidden" id="register-content">
+                <form id="register-form" class="auth-form">
+                    <!-- Username -->
+                    <div class="input-group">
+                        <label for="register-username">
+                            <i class="fas fa-user"></i>
+                            Usuario
+                        </label>
+                        <input 
+                            type="text" 
+                            id="register-username" 
+                            name="username"
+                            placeholder="Elige un usuario (3-20 caracteres)"
+                            required
+                            minlength="3"
+                            maxlength="20"
+                            autocomplete="username"
+                        >
+                        <span class="input-error" id="register-username-error"></span>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="input-group">
+                        <label for="register-email">
+                            <i class="fas fa-envelope"></i>
+                            Email
+                        </label>
+                        <input 
+                            type="email" 
+                            id="register-email" 
+                            name="email"
+                            placeholder="tu@email.com"
+                            required
+                            autocomplete="email"
+                        >
+                        <span class="input-error" id="register-email-error"></span>
+                    </div>
+
+                    <!-- Password -->
+                    <div class="input-group">
+                        <label for="register-password">
+                            <i class="fas fa-lock"></i>
+                            Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input 
+                                type="password" 
+                                id="register-password" 
+                                name="password"
+                                placeholder="Mínimo 8 caracteres"
+                                required
+                                minlength="8"
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="password-toggle" id="register-password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <!-- Indicador de fortaleza -->
+                        <div class="password-strength" id="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strength-fill"></div>
+                            </div>
+                            <span class="strength-text" id="strength-text">Ingresa una contraseña</span>
+                        </div>
+                        <span class="input-error" id="register-password-error"></span>
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="input-group">
+                        <label for="register-confirm-password">
+                            <i class="fas fa-lock"></i>
+                            Confirmar Contraseña
+                        </label>
+                        <div class="password-wrapper">
+                            <input 
+                                type="password" 
+                                id="register-confirm-password" 
+                                name="confirmPassword"
+                                placeholder="Repite tu contraseña"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="password-toggle" id="register-confirm-password-toggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <span class="input-error" id="register-confirm-password-error"></span>
+                    </div>
+
+                    <!-- License Key -->
+                    <div class="input-group">
+                        <label for="register-license">
+                            <i class="fas fa-key"></i>
+                            License Key
+                        </label>
+                        <input 
+                            type="text" 
+                            id="register-license" 
+                            name="license"
+                            placeholder="XXXX-XXXX-XXXX-XXXX"
+                            required
+                            pattern="[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}"
+                        >
+                        <span class="input-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Ingresa tu license key para activar tu cuenta
+                        </span>
+                        <span class="input-error" id="register-license-error"></span>
+                    </div>
+
+                    <!-- Botón de Registro -->
+                    <button type="submit" class="auth-btn primary" id="register-btn">
+                        <span class="btn-text">Crear Cuenta</span>
+                        <span class="btn-loader">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+
+                    <!-- Link a Login -->
+                    <div class="auth-switch">
+                        ¿Ya tienes cuenta? 
+                        <a href="#" class="switch-link" data-switch="login">Inicia sesión</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Modal de Recuperación de Contraseña -->
+    <div class="modal-overlay hidden" id="forgot-password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Recuperar Contraseña</h3>
+                <button class="modal-close" id="modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="forgot-password-form" class="modal-form">
+                <div class="input-group">
+                    <label for="forgot-email">
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </label>
+                    <input 
+                        type="email" 
+                        id="forgot-email" 
+                        name="email"
+                        placeholder="tu@email.com"
+                        required
+                    >
+                    <span class="input-error" id="forgot-email-error"></span>
+                </div>
+                <button type="submit" class="auth-btn primary">
+                    <span class="btn-text">Enviar Email de Recuperación</span>
+                    <span class="btn-loader">
+                        <i class="fas fa-spinner fa-spin"></i>
+                    </span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="auth.js"></script>
+    <script src="cursor-trail.js"></script>
+</body>
+</html>
+
