@@ -1,1 +1,4 @@
-// CONFIGURACIÓN - EDITA SOLO LA URL DE ABAJOvar API_CONFIG = {    API_URL: 'https://swim-fees-occupation-displayed.trycloudflare.com/api/send-command'};
+// CONFIGURACIÓN - EDITA SOLO LA URL DE ABAJO
+var API_CONFIG = {
+    API_URL: 'https://ddr-breeds-pushing-mystery.trycloudflare.com/api/send-command'
+};
