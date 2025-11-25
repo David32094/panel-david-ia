@@ -7,16 +7,30 @@ let CONFIG = {
 };
 
 // Intentar cargar configuración externa desde config.js
+console.log('[CONFIG] ========================================');
 console.log('[CONFIG] Verificando config.js...');
 console.log('[CONFIG] typeof API_CONFIG:', typeof API_CONFIG);
+console.log('[CONFIG] API_CONFIG:', API_CONFIG);
+
 if (typeof API_CONFIG !== 'undefined' && API_CONFIG && API_CONFIG.API_URL) {
     CONFIG.API_URL = API_CONFIG.API_URL;
-    console.log('[CONFIG] ✅ Configuración cargada desde config.js:', CONFIG.API_URL);
+    console.log('[CONFIG] ✅ Configuración cargada desde config.js');
+    console.log('[CONFIG] URL:', CONFIG.API_URL);
+    
+    // Verificar que la URL no sea localhost
+    if (CONFIG.API_URL.includes('localhost') || CONFIG.API_URL.includes('127.0.0.1')) {
+        console.error('[CONFIG] ❌ ERROR: La URL es localhost, NO funcionará desde internet!');
+    } else if (!CONFIG.API_URL.includes('trycloudflare.com') && !CONFIG.API_URL.includes('ngrok')) {
+        console.warn('[CONFIG] ⚠️ URL no parece ser de Cloudflare o ngrok');
+    } else {
+        console.log('[CONFIG] ✅ URL parece correcta');
+    }
 } else {
-    console.error('[CONFIG] ❌ No se encontró config.js o API_CONFIG. Usando localhost por defecto.');
-    console.error('[CONFIG] ⚠️ Esto NO funcionará desde móvil/internet.');
-    console.error('[CONFIG] 💡 Verifica que config.js esté en GitHub y tenga la URL correcta.');
+    console.error('[CONFIG] ❌ No se encontró config.js o API_CONFIG');
+    console.error('[CONFIG] ⚠️ Usando localhost por defecto - NO funcionará desde móvil/internet');
+    console.error('[CONFIG] 💡 Verifica que config.js esté en GitHub y tenga la URL correcta');
 }
+console.log('[CONFIG] ========================================');
 
 // ============================================
 // ESTADO GLOBAL
@@ -229,6 +243,9 @@ async function sendCommandToBot(command, params = {}) {
             console.log('   → Comando desconocido:', command);
         }
         
+        console.log('[FETCH] Intentando conectar a:', CONFIG.API_URL);
+        console.log('[FETCH] Payload completo:', JSON.stringify(payload, null, 2));
+        
         const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
@@ -238,33 +255,46 @@ async function sendCommandToBot(command, params = {}) {
             body: JSON.stringify(payload)
         });
         
-        console.log('📥 Respuesta HTTP Status:', response.status, response.statusText);
+        console.log('[FETCH] ✅ Respuesta recibida. Status:', response.status);
+        console.log('[FETCH] 📥 Respuesta HTTP Status:', response.status, response.statusText);
         
         if (response.ok) {
             const data = await response.json();
-            console.log('✅ Respuesta del bot (JSON):', JSON.stringify(data, null, 2));
-            console.log('========================================');
+            console.log('[FETCH] ✅ Respuesta del bot (JSON):', JSON.stringify(data, null, 2));
+            console.log('[FETCH] ========================================');
             return data;
         } else {
             const errorText = await response.text();
-            console.error('❌ Error response (texto):', errorText);
-            console.log('========================================');
+            console.error('[FETCH] ❌ Error response (texto):', errorText);
+            console.log('[FETCH] ========================================');
             return { success: false, message: `HTTP ${response.status}: ${errorText}` };
         }
     } catch (error) {
-        console.error('❌ Error al enviar comando:', error);
-        console.error('Stack trace:', error.stack);
-        console.log('========================================');
+        console.error('[FETCH] ❌ Error al enviar comando:', error);
+        console.error('[FETCH] Tipo de error:', error.name);
+        console.error('[FETCH] Mensaje:', error.message);
+        console.error('[FETCH] Stack trace:', error.stack);
+        console.log('[FETCH] ========================================');
+        
+        // Detectar errores de red específicos
+        if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+            console.error('[FETCH] ❌ ERROR DE RED: No se puede conectar al servidor');
+            console.error('[FETCH] 💡 Verifica:');
+            console.error('[FETCH]   1. ¿Cloudflared está corriendo?');
+            console.error('[FETCH]   2. ¿El bot está corriendo?');
+            console.error('[FETCH]   3. ¿La URL es correcta?', CONFIG.API_URL);
+            return { success: false, message: 'Error de conexión. Verifica que cloudflared y el bot estén corriendo.' };
+        }
+        
         return { success: false, message: error.message };
     }
 }
-
 
 /**
  * Se une a un equipo usando el código
  */
 async function joinTeam(teamCode) {
-        addLogMessage(`🚪 Conectando...`, 'info');
+    addLogMessage(`🚪 Conectando...`, 'info');
     console.log('[JOIN] Iniciando proceso de unirse al equipo:', teamCode);
     
     // Enviar el comando /join exactamente igual que /ev o /play
