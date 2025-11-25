@@ -1,10 +1,22 @@
 // ============================================
 // CONFIGURACIÓN
 // ============================================
-const CONFIG = {
-    // URL de la API del bot (el bot ahora tiene un servidor HTTP en puerto 3000)
+// Cargar configuración desde config.js si existe, sino usar valores por defecto
+let CONFIG = {
     API_URL: 'http://localhost:3000/api/send-command'
 };
+
+// Intentar cargar configuración externa desde config.js
+console.log('[CONFIG] Verificando config.js...');
+console.log('[CONFIG] typeof API_CONFIG:', typeof API_CONFIG);
+if (typeof API_CONFIG !== 'undefined' && API_CONFIG && API_CONFIG.API_URL) {
+    CONFIG.API_URL = API_CONFIG.API_URL;
+    console.log('[CONFIG] ✅ Configuración cargada desde config.js:', CONFIG.API_URL);
+} else {
+    console.error('[CONFIG] ❌ No se encontró config.js o API_CONFIG. Usando localhost por defecto.');
+    console.error('[CONFIG] ⚠️ Esto NO funcionará desde móvil/internet.');
+    console.error('[CONFIG] 💡 Verifica que config.js esté en GitHub y tenga la URL correcta.');
+}
 
 // ============================================
 // ESTADO GLOBAL
@@ -221,6 +233,7 @@ async function sendCommandToBot(command, params = {}) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'ngrok-skip-browser-warning': 'true',  // Necesario para ngrok free
             },
             body: JSON.stringify(payload)
         });
@@ -443,12 +456,17 @@ function createEmoteCard(emote) {
         <div class="emote-number">#${emote.Number}</div>
     `;
     
-    card.addEventListener('click', (e) => {
-        console.log('Emote card clicked:', emote.Number, 'UID valid:', isValidUID, 'Current UID:', currentUID, 'Team code valid:', isValidTeamCode, 'Current team code:', currentTeamCode);
+    // Función para manejar clicks/touch
+    const handleEmoteClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
+        console.log('[EMOTE] Click detectado:', emote.Number);
+        console.log('[EMOTE] UID válido:', isValidUID, 'UID actual:', currentUID);
+        console.log('[EMOTE] Team code válido:', isValidTeamCode, 'Team code actual:', currentTeamCode);
+        console.log('[EMOTE] API URL:', CONFIG.API_URL);
         
         if (isValidUID && currentUID && isValidTeamCode && currentTeamCode) {
+            console.log('[EMOTE] ✅ Todo válido, ejecutando emote...');
             // Agregar animación de click
             card.classList.add('sending');
             
@@ -467,7 +485,7 @@ function createEmoteCard(emote) {
             
             // Para evolutivas usar /ev, para normales y dúo usar /play
             const command = category === 'evolutivas' ? '/ev' : '/play';
-            console.log('Enviando comando:', `${command} ${currentUID} ${emote.Number}`, 'Categoría:', category);
+            console.log('[EMOTE] Enviando comando:', `${command} ${currentUID} ${emote.Number}`, 'Categoría:', category);
             
             sendPlayCommand(currentUID, emote.Number, category, command).then((success) => {
                 // Remover animación de sending y agregar success
@@ -478,6 +496,10 @@ function createEmoteCard(emote) {
                         card.classList.remove('success');
                     }, 2000);
                 }
+            }).catch((error) => {
+                console.error('[EMOTE] Error al ejecutar emote:', error);
+                card.classList.remove('sending');
+                addLogMessage('❌ Error al ejecutar emote: ' + error.message, 'error');
             });
         } else {
             if (!isValidUID || !currentUID) {
@@ -488,7 +510,11 @@ function createEmoteCard(emote) {
                 teamCodeInput.focus();
             }
         }
-    });
+    };
+    
+    // Agregar event listeners para desktop y móvil
+    card.addEventListener('click', handleEmoteClick);
+    card.addEventListener('touchend', handleEmoteClick);
     
     // Agregar efecto visual al hacer hover
     card.style.cursor = 'pointer';
