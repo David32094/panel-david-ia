@@ -1,6 +1,16 @@
-// CONFIGURACIÓN - EDITA SOLO LA URL DE ABAJO
-// Para uso LOCAL, usa: http://localhost:3000/api/send-command
-// Para uso REMOTO (Cloudflare), usa: https://TU-URL.trycloudflare.com/api/send-command
-var API_CONFIG = {
-    API_URL: 'http://localhost:3000/api/send-command'
+// ============================================
+// CONFIGURACIÓN DE LA API DEL BOT EN RAILWAY
+// ============================================
+
+window.API_CONFIG = {
+    // URL para enviar comandos al bot
+    API_URL: 'https://web-production-ddaf8.up.railway.app/api/send-command',
+
+    // URL para consultar el estado del bot
+    STATUS_URL: 'https://web-production-ddaf8.up.railway.app/api/status'
 };
+
+// Logs para comprobar que se cargó bien
+console.log('[CONFIG] ✅ config.js cargado');
+console.log('[CONFIG] API_URL:', window.API_CONFIG.API_URL);
+console.log('[CONFIG] STATUS_URL:', window.API_CONFIG.STATUS_URL);
