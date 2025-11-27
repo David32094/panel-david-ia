@@ -17,13 +17,15 @@ if (typeof API_CONFIG !== 'undefined' && API_CONFIG && API_CONFIG.API_URL) {
     console.log('[CONFIG] ✅ Configuración cargada desde config.js');
     console.log('[CONFIG] URL:', CONFIG.API_URL);
     
-    // Verificar que la URL no sea localhost
+    // Verificar el tipo de URL
     if (CONFIG.API_URL.includes('localhost') || CONFIG.API_URL.includes('127.0.0.1')) {
-        console.error('[CONFIG] ❌ ERROR: La URL es localhost, NO funcionará desde internet!');
-    } else if (!CONFIG.API_URL.includes('trycloudflare.com') && !CONFIG.API_URL.includes('ngrok')) {
-        console.warn('[CONFIG] ⚠️ URL no parece ser de Cloudflare o ngrok');
+        console.log('[CONFIG] ✅ Modo LOCAL detectado - Solo funcionará en esta computadora');
+    } else if (CONFIG.API_URL.includes('trycloudflare.com')) {
+        console.log('[CONFIG] ✅ Modo REMOTO (Cloudflare) detectado');
+    } else if (CONFIG.API_URL.includes('ngrok')) {
+        console.log('[CONFIG] ✅ Modo REMOTO (ngrok) detectado');
     } else {
-        console.log('[CONFIG] ✅ URL parece correcta');
+        console.warn('[CONFIG] ⚠️ URL personalizada detectada');
     }
 } else {
     console.error('[CONFIG] ❌ No se encontró config.js o API_CONFIG');
@@ -280,10 +282,19 @@ async function sendCommandToBot(command, params = {}) {
         if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
             console.error('[FETCH] ❌ ERROR DE RED: No se puede conectar al servidor');
             console.error('[FETCH] 💡 Verifica:');
-            console.error('[FETCH]   1. ¿Cloudflared está corriendo?');
-            console.error('[FETCH]   2. ¿El bot está corriendo?');
-            console.error('[FETCH]   3. ¿La URL es correcta?', CONFIG.API_URL);
-            return { success: false, message: 'Error de conexión. Verifica que cloudflared y el bot estén corriendo.' };
+            
+            // Mensajes diferentes según si es local o remoto
+            if (CONFIG.API_URL.includes('localhost') || CONFIG.API_URL.includes('127.0.0.1')) {
+                console.error('[FETCH]   1. ¿El bot está corriendo? (Ejecuta INICIAR_BOT.bat)');
+                console.error('[FETCH]   2. ¿El puerto 3000 está disponible?');
+                console.error('[FETCH]   3. ¿El panel se abrió desde http://localhost? (no desde file://)');
+                return { success: false, message: 'Error de conexión. Verifica que el bot esté corriendo en localhost:3000.' };
+            } else {
+                console.error('[FETCH]   1. ¿El bot está corriendo?');
+                console.error('[FETCH]   2. ¿El túnel (Cloudflare/ngrok) está activo?');
+                console.error('[FETCH]   3. ¿La URL es correcta?', CONFIG.API_URL);
+                return { success: false, message: 'Error de conexión. Verifica que el bot y el túnel estén corriendo.' };
+            }
         }
         
         return { success: false, message: error.message };
