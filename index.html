@@ -54,6 +54,38 @@
             </div>
             
             <div class="input-container" style="margin-top: 20px;">
+                <label class="input-label">Región / Cuenta del Bot</label>
+                <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input 
+                            type="radio" 
+                            name="bot-region" 
+                            id="bot-region-usa" 
+                            value="usa" 
+                            checked
+                            style="width: 18px; height: 18px; cursor: pointer;"
+                        >
+                        <span style="color: #8DAFA3; font-size: 0.95rem;">🇺🇸 USA / LATAM Norte</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                        <input 
+                            type="radio" 
+                            name="bot-region" 
+                            id="bot-region-brazil" 
+                            value="brazil"
+                            style="width: 18px; height: 18px; cursor: pointer;"
+                        >
+                        <span style="color: #8DAFA3; font-size: 0.95rem;">🇧🇷 Brasil</span>
+                    </label>
+                </div>
+                <div style="margin-top: 8px; padding: 10px; background: rgba(30, 245, 154, 0.1); border-radius: 8px; border: 1px solid rgba(30, 245, 154, 0.3);">
+                    <span id="bot-region-description" style="color: #1EF59A; font-size: 0.85rem;">
+                        🇺🇸 <strong>USA / LATAM Norte:</strong> Cuenta principal (UID: 4300429800)
+                    </span>
+                </div>
+            </div>
+            
+            <div class="input-container" style="margin-top: 20px;">
                 <label class="input-label">Modo de Operación</label>
                 <div style="display: flex; gap: 20px; align-items: center; margin-top: 10px;">
                     <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
@@ -144,4 +176,7 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+
 
