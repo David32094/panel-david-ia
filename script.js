@@ -192,20 +192,6 @@ function updateBotModeDescription() {
     }
 }
 
-// Actualizar descripción cuando cambia la región
-function updateBotRegionDescription() {
-    const selectedRegion = document.querySelector('input[name="bot-region"]:checked')?.value || 'usa';
-    const regionDescription = document.getElementById('bot-region-description');
-    
-    if (regionDescription) {
-        if (selectedRegion === 'usa') {
-            regionDescription.innerHTML = '🇺🇸 <strong>USA / LATAM Norte:</strong> Cuenta principal (UID: 4300429800)';
-        } else if (selectedRegion === 'brazil') {
-            regionDescription.innerHTML = '🇧🇷 <strong>Brasil:</strong> Cuenta de Brasil (UID: 4313688836)';
-        }
-    }
-}
-
 // Event listeners para los radio buttons
 if (botModeLeave) {
     botModeLeave.addEventListener('change', updateBotModeDescription);
@@ -215,67 +201,10 @@ if (botModeStay) {
     botModeStay.addEventListener('change', updateBotModeDescription);
 }
 
-// Event listeners para los radio buttons de región
-const botRegionUSA = document.getElementById('bot-region-usa');
-const botRegionBrazil = document.getElementById('bot-region-brazil');
-
-if (botRegionUSA) {
-    botRegionUSA.addEventListener('change', async () => {
-        updateBotRegionDescription();
-        // Enviar la región seleccionada al bot
-        await sendRegionToBot('usa');
-    });
-}
-
-if (botRegionBrazil) {
-    botRegionBrazil.addEventListener('change', async () => {
-        updateBotRegionDescription();
-        // Enviar la región seleccionada al bot
-        await sendRegionToBot('brazil');
-    });
-}
-
-// Función para enviar la región al bot
-async function sendRegionToBot(region) {
-    try {
-        const regionPayload = { region: region };
-        const response = await fetch(`${CONFIG.API_URL.replace('/api/send-command', '/api/select-region')}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'ngrok-skip-browser-warning': 'true',
-            },
-            body: JSON.stringify(regionPayload)
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            console.log('[REGION] Región enviada exitosamente:', data);
-            addLogMessage(`✅ Región cambiada a: ${data.message}`, 'success');
-            window.regionSent = true;
-        } else {
-            console.error('[REGION] Error al enviar región:', response.status);
-            addLogMessage(`❌ Error al cambiar región`, 'error');
-        }
-    } catch (error) {
-        console.error('[REGION] Error al enviar región:', error);
-        addLogMessage(`❌ Error de conexión al cambiar región`, 'error');
-    }
-}
-
-// Enviar la región inicial cuando se carga la página
-document.addEventListener('DOMContentLoaded', async () => {
+// Inicializar descripción cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
     updateBotModeDescription();
-    updateBotRegionDescription();
-    
-    // Esperar un momento y enviar la región inicial
-    setTimeout(async () => {
-        const initialRegion = document.querySelector('input[name="bot-region"]:checked')?.value || 'usa';
-        await sendRegionToBot(initialRegion);
-    }, 1000);
 });
-
-// Ya se maneja en el event listener de región arriba
 
 // ============================================
 // ENVÍO DE COMANDOS
@@ -292,28 +221,6 @@ async function sendCommandToBot(command, params = {}) {
         console.log('Comando:', command);
         console.log('Parámetros:', params);
         
-        // Obtener la región seleccionada
-        const selectedRegion = document.querySelector('input[name="bot-region"]:checked')?.value || 'usa';
-        
-        // Si es la primera vez que se selecciona una región, enviarla al bot
-        if (!window.regionSent) {
-            try {
-                const regionPayload = { region: selectedRegion };
-                await fetch(`${CONFIG.API_URL.replace('/api/send-command', '/api/select-region')}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'ngrok-skip-browser-warning': 'true',
-                    },
-                    body: JSON.stringify(regionPayload)
-                });
-                window.regionSent = true;
-                console.log('[REGION] Región enviada al bot:', selectedRegion);
-            } catch (error) {
-                console.error('[REGION] Error al enviar región:', error);
-            }
-        }
-        
         // Enviar TODOS los comandos con el mismo formato que el bot espera del chat del juego
         // El bot procesará el comando directamente como si viniera del chat
         const payload = {
@@ -321,8 +228,7 @@ async function sendCommandToBot(command, params = {}) {
             uid: params.uid || '',
             emote_number: params.emote_number || '',
             category: params.category || null,
-            command_type: params.command_type || '/play',  // Incluir siempre, el bot lo ignorará si no es emote
-            region: selectedRegion  // Agregar la región seleccionada
+            command_type: params.command_type || '/play'  // Incluir siempre, el bot lo ignorará si no es emote
         };
         
         console.log('📦 Payload completo que se envía:', JSON.stringify(payload, null, 2));
@@ -908,9 +814,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }, 500);
 });
-
-
-
-
 
 
