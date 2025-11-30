@@ -23,6 +23,26 @@ const WEAPON_NAMES = {
     "15": "G18",           // 909038012
     "16": "Parafal",       // 909045001
     "17": "P90",           // 909049010
+    "146": "MP5 evolutiva", // 909033002
+    "211": "Puño evolutivos", // 909038004
+    
+    // Emotes normales
+    "2": "Risa",           // 909000002
+    "7": "Pio Piu",        // 909000007
+    "12": "Lagartija",     // 909000012
+    "20": "Paso del mal",  // 909000020
+    "33": "Bandera marrón", // 909000034
+    "75": "Bailesito",     // 909000077
+    "93": "Pingüinito",    // 909000095
+    "133": "Piedra, papel o tijera", // 909000135
+    "140": "Mueve la cola como Anitta", // 909000142
+    "168": "Ajolote moviéndolo", // 909034014
+    "190": "Emote 190",    // 909036008
+    "196": "Venado",       // 909037001
+    "206": "Emote 206",    // 909037011
+    "208": "Emote 208",    // 909038001
+    "268": "Emote 268",    // 909042007
+    "291": "Oveja",        // 909044004
     
     // Agregar más nombres según corresponda
 };
@@ -31,4 +51,5 @@ const WEAPON_NAMES = {
 function getWeaponName(emoteNumber) {
     return WEAPON_NAMES[emoteNumber] || `Emote #${emoteNumber}`;
 }
+
 
