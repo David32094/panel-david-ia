@@ -101,41 +101,21 @@ const EMOTES_DATA = {
             Number: "211",
             Id: "909038004",  // Puño evolutivos
             Image: "emotes/evolutivas/evolutiva 211.png"
+        },
+        {
+            Number: "180",
+            Id: "909035012",  // AN94 evolutiva
+            Image: "emotes/evolutivas/evolutiva 180.png"
         }
         // Agregar más emotes evolutivas aquí si es necesario
     ],
     
     normales: [
-        // Emotes normales - Usar números de emotes.json
-        {
-            Number: "1",
-            Id: "909000001",
-            Image: "emotes/normales/normal-1.png"
-        },
+        // Emotes normales - Solo los especificados
         {
             Number: "2",
             Id: "909000002",  // Risa
             Image: "emotes/normales/normal-2.png"
-        },
-        {
-            Number: "3",
-            Id: "909000003",
-            Image: "emotes/normales/normal-3.png"
-        },
-        {
-            Number: "4",
-            Id: "909000004",
-            Image: "emotes/normales/normal-4.png"
-        },
-        {
-            Number: "5",
-            Id: "909000005",
-            Image: "emotes/normales/normal-5.png"
-        },
-        {
-            Number: "6",
-            Id: "909000006",
-            Image: "emotes/normales/normal-6.png"
         },
         {
             Number: "7",
@@ -143,64 +123,9 @@ const EMOTES_DATA = {
             Image: "emotes/normales/normal-7.png"
         },
         {
-            Number: "8",
-            Id: "909000008",
-            Image: "emotes/normales/normal-8.png"
-        },
-        {
-            Number: "9",
-            Id: "909000009",
-            Image: "emotes/normales/normal-9.png"
-        },
-        {
-            Number: "10",
-            Id: "909000010",
-            Image: "emotes/normales/normal-10.png"
-        },
-        {
-            Number: "11",
-            Id: "909000011",
-            Image: "emotes/normales/normal-11.png"
-        },
-        {
             Number: "12",
             Id: "909000012",  // Lagartija
             Image: "emotes/normales/normal-12.png"
-        },
-        {
-            Number: "13",
-            Id: "909000013",
-            Image: "emotes/normales/normal-13.png"
-        },
-        {
-            Number: "14",
-            Id: "909000014",
-            Image: "emotes/normales/normal-14.png"
-        },
-        {
-            Number: "15",
-            Id: "909000015",
-            Image: "emotes/normales/normal-15.png"
-        },
-        {
-            Number: "16",
-            Id: "909000016",
-            Image: "emotes/normales/normal-16.png"
-        },
-        {
-            Number: "17",
-            Id: "909000017",
-            Image: "emotes/normales/normal-17.png"
-        },
-        {
-            Number: "18",
-            Id: "909000018",
-            Image: "emotes/normales/normal-18.png"
-        },
-        {
-            Number: "19",
-            Id: "909000019",
-            Image: "emotes/normales/normal-19.png"
         },
         {
             Number: "20",
